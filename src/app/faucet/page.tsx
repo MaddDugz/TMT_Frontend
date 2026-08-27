@@ -4,7 +4,7 @@ import { useWriteContract, useWaitForTransactionReceipt, useAccount } from "wagm
 import {FaucetTokenABI} from "@kingtony36/turtlenft-contracts";
 import { Container } from "@/components/container";
 import {useState} from "react";
-import {TransactionExecutionError,  UserRejectedRequestError} from "viem";
+import {TransactionExecutionError,  UserRejectedRequestError, BaseError} from "viem";
 import { getFriendlyErrorMessage } from "@/components/getFriendlyError";
 
 const rawNft = process.env.NEXT_PUBLIC_NFT_TOKEN_ADDRESS;
@@ -47,12 +47,14 @@ export function ClaimButton() { // claim button logic
     disabled
   >
   {
-  error?.walk((e) => e instanceof  UserRejectedRequestError)
-    ? "User rejected request" 
-    : error?.walk((e) => e instanceof TransactionExecutionError) ? 
-    "Cooldown not exceeded "
-    : getFriendlyErrorMessage(error)
-  }
+  error instanceof BaseError
+    ? error?.walk((e) => e instanceof  UserRejectedRequestError)
+      ? "User rejected request" 
+      : error?.walk((e) => e instanceof TransactionExecutionError) ? 
+      "Cooldown not exceeded "
+      : getFriendlyErrorMessage(error)
+    : error?.message ?? "Something went wrong"
+    }
   </button>
 </div>
     )
