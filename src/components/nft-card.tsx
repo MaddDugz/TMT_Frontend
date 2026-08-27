@@ -15,7 +15,7 @@ export type NftCardProps = {
   name: string;
   imageSrc: string;
   rawUnitPrice: string | null;
-  quantity:number | string
+  quantity?:number | string
 };
 
 
