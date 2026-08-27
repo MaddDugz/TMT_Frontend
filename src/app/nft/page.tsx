@@ -85,7 +85,7 @@ export default async function NFT() {
         typeof rawTypeId === "number" || typeof rawTypeId === "string"
           ? rawTypeId
           : `${Math.random().toString(36).slice(2)}`;
-      const remainingQuantity = nft.quantity ?? 0;
+    const remainingQuantity: number = nft.quantity ?? 0;
       const fallbackName = `NFT #${String(typeId)}`;
       const name =
         typeof metadata.name === "string" && metadata.name.length ? metadata.name : fallbackName;
