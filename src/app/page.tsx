@@ -127,7 +127,7 @@ export default async function Home() {
 
                 <div className="mt-4 overflow-hidden rounded-2xl ring-1 ring-white/10 aspect-[3/2] ">
                   <img
-                    src={featured?.imageUrl || "https://placehold.co/900x600/png"}
+                    src={typeof featured?.imageUrl === "string" ? featured?.imageUrl : "https://placehold.co/900x600/png"}
                     alt={
                       typeof featured?.name === "string"
                         ? featured.name
