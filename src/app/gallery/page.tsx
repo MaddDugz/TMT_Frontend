@@ -95,7 +95,8 @@ export default function Gallery() {
         const nftData = await pMap(
           (nfts_mints ?? []) as Array<Record<string, unknown>>,
           async (nft) => {
-              const metadataUri = String(nft.nft_created.metadata_uri ?? "");
+              const nft_created = nft.nft_created as Record<string, unknown>;
+              const metadataUri = String(nft_created?.metadata_uri ?? "");
                   const metadata = await getNFTMetadata(metadataUri);
                   const imageUrl = ipfsToGatewayUrl(String(metadata.image ?? ""));
                   const unitPriceRaw = resolveNftPriceRaw(nft);
