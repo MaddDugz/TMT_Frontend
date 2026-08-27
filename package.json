@@ -1,17 +1,29 @@
 {
-  "name": "mintaura-clone",
+  "name": "TMT NFT Project",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "XDG_CONFIG_HOME=.config next dev --webpack",
+    "build": "XDG_CONFIG_HOME=.config next build",
+    "start": "XDG_CONFIG_HOME=.config next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "@kingtony36/turtlenft-contracts": "^1.0.8",
+    "@rainbow-me/rainbowkit": "^2.2.11",
+    "@supabase/supabase-js": "^2.112.0",
+    "@tanstack/react-query": "^5.101.4",
+    "@x402/core": "^2.22.0",
+    "@x402/evm": "^2.22.0",
+    "@x402/svm": "^2.22.0",
+    "dotenv": "^17.4.2",
+    "ethers": "^6.17.0",
+    "lucide-react": "^1.34.0",
     "next": "16.2.12",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "viem": "^2.55.17",
+    "wagmi": "^2.19.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

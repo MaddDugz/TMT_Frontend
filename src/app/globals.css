@@ -1,26 +1,206 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #020b06;
+  --background-soft: #030f08;
+  --foreground: #ffffff;
+  --surface: #071d12;
+  --surface-2: #05140d;
+  --surface-3: rgba(255, 255, 255, 0.035);
+  --border: rgba(0, 200, 83, 0.28);
+  --border-2: rgba(255, 255, 255, 0.08);
+  --accent: #00c853;
+  --accent-2: #00e676;
+  --accent-soft: rgba(0, 230, 118, 0.12);
+  --accent-ring: rgba(0, 230, 118, 0.45);
+  --muted: rgba(255, 255, 255, 0.65);
+  --muted-2: rgba(255, 255, 255, 0.35);
+  --font-rubik: "Rubik", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --font-squada: "Squada One", ui-sans-serif, system-ui, -apple-system, "Impact", sans-serif;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-soft: var(--background-soft);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-border: var(--border);
+  --color-border-2: var(--border-2);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ring: var(--accent-ring);
+  --color-muted: var(--muted);
+  --color-muted-2: var(--muted-2);
+  --font-sans: var(--font-rubik);
+  --font-display: var(--font-squada);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(0, 200, 83, 0.12), transparent 55%),
+    radial-gradient(900px 500px at 110% 0%, rgba(0, 230, 118, 0.08), transparent 55%),
+    linear-gradient(180deg, var(--background) 0%, var(--background-soft) 100%);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-rubik), ui-sans-serif, system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+::selection {
+  background: rgba(0, 230, 118, 0.22);
+  color: #ffffff;
+}
+
+::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 1px rgba(0, 230, 118, 0.35),
+    0 0 0 4px rgba(0, 230, 118, 0.15);
+  border-radius: 12px;
+}
+
+button,
+a,
+[role="button"],
+input,
+textarea,
+select {
+  transition-property: transform, background-color, box-shadow, opacity, color,
+    border-color, text-decoration-color, fill, stroke, filter;
+  transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-duration: 180ms;
+}
+
+button:where(:not(:disabled)):hover,
+a:where([href]):hover,
+[role="button"]:not([aria-disabled="true"]):hover {
+  transform: translateY(-0.5px);
+}
+
+button:where(:not(:disabled)):active,
+a:where([href]):active,
+[role="button"]:not([aria-disabled="true"]):active {
+  transform: translateY(0);
+  filter: brightness(0.98);
+}
+
+img {
+  -webkit-user-drag: none;
+}
+
+.tmt-surface {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)),
+    var(--surface);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 20px 60px -30px rgba(0, 0, 0, 0.7);
+}
+
+.tmt-card-hover:hover {
+  box-shadow:
+    0 18px 50px -30px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(0, 230, 118, 0.22);
+}
+
+.tmt-glow {
+  box-shadow:
+    0 0 0 1px rgba(0, 230, 118, 0.35),
+    0 16px 40px -20px rgba(0, 230, 118, 0.45);
+}
+
+.tmt-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    110deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.06) 40%,
+    rgba(255, 255, 255, 0.03) 80%
+  );
+}
+
+.tmt-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 230, 118, 0.09) 50%,
+    transparent 100%
+  );
+  animation: tmt-sweep 1.6s ease-in-out infinite;
+}
+
+@keyframes tmt-sweep {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes tmt-pulse-soft {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(0, 230, 118, 0.0);
+  }
+}
+
+.tmt-dot-connected {
+  position: relative;
+  display: inline-flex;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #00e676;
+  box-shadow: 0 0 10px rgba(0, 230, 118, 0.6);
+  animation: tmt-pulse-soft 2s ease-in-out infinite;
+}
+
+.tmt-prose-sm p {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.ash-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #6b6f76 transparent; /* ash thumb, transparent track */
+}
+
+.ash-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ash-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ash-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #6b6f76; /* ash grey */
+  border-radius: 9999px;
+}
+
+.ash-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #8a8f98; /* slightly lighter on hover */
+}
+
