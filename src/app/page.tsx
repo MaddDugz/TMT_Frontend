@@ -57,8 +57,9 @@ export default async function Home() {
     }),
   );
 
-  const featured = nftData[0];
-
+  const featuredData = nftData[0];
+  const featured = featuredData as Record<string, unknown> | undefined;
+  
   return (
     <div className="relative pb-16">
       <section className="pt-10 sm:pt-14 ">
