@@ -13,7 +13,7 @@ export function formatPrice (value: unknown) {
     return `${n.toFixed(0)} TMT`;
   }
 
- export async function getNFTMetadata(metadataURI: string) {
+ export async function getNFTMetadata(metadataURI: string): Promise<Record<string, unknown>>{
     const url = ipfsToGatewayUrl(metadataURI);
     try{
     const response = await fetch(url);
