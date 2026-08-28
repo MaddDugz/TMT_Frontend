@@ -9,6 +9,15 @@ import UseCooldownCountdown from "@/components/coolDown";
 import {getNFTMetadata, ipfsToGatewayUrl} from "@/app/page";
 
 
+type HistoryItem = {
+  minted_at: string;
+  token_id: number;
+  nft_created: {
+    metadata_uri: string;
+  };
+  name: string;
+}
+
 export function formatAddress(address: string): string { //shorten address
   if (!address) return "";
 
@@ -40,7 +49,7 @@ export default function ProfilePage() {
     { label: "Total claims", value: "0" },
     { label: "Level", value: "0" },
   ]);
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState<HistoryItem[]>([]);
 
 
   useEffect(() => { //load profile details stored in DB
@@ -85,12 +94,12 @@ export default function ProfilePage() {
   }
 
 
-  async function metaData(item: any) { //get metadata uri of data and name
+  async function metaData(item: any):Promise<string> { //get metadata uri of data and name
   const metadata = await getNFTMetadata(item.nft_created?.metadata_uri ?? "");
-  return metadata?.name ?? "";
+  return typeof metadata?.name === "string" ? metadata?.name : "";
 }
 
-const historyData = await Promise.all( // add all the gotten metadata uri to history using Promise.all to ensure it waits for all to finish
+const historyData: HistoryItem[] = await Promise.all( // add all the gotten metadata uri to history using Promise.all to ensure it waits for all to finish
   History.map(async (item) => ({
     ...item,
     name: await metaData(item),
@@ -149,7 +158,7 @@ const historyData = await Promise.all( // add all the gotten metadata uri to his
                     <div className="min-w-0">
                       <div className="text-base font-semibold text-white sm:text-lg">
                         {isConnected
-                          ? formatAddress(walletAddress)
+                          ? formatAddress(walletAddress as string)
                           : "Guest User"}
                       </div>
 
