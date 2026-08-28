@@ -57,7 +57,9 @@ export function NftCard({ tokenId, typeId, name, imageSrc, rawUnitPrice, remaini
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   const unitPrice = useMemo(() => parseBigPrice(rawUnitPrice), [rawUnitPrice]);
 
-  const totalLabel = formatTotalPrice(unitPrice, selectedQuantity);
+  const totalLabel = formatTotalPrice(unitPrice, selectedQuantity); // one to display as string
+  const totalLableNumber = Number(totalLabel); // one to send over as number
+
 
 if(typeId !== undefined)
   return (
@@ -112,7 +114,7 @@ if(typeId !== undefined)
           typeId={typeId}
           defaultQuantity={selectedQuantity}
           onQuantityChange={setSelectedQuantity}
-          totalLabel={totalLabel}
+          totalLabel= {totalLableNumber}
         />
         </div>
           </div>

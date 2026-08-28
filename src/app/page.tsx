@@ -46,7 +46,7 @@ export default async function Home() {
 
 
   const nftData = await Promise.all(
-    (nfts_created ?? []).map(async (nft) => {
+    (nfts_created ?? []).map(async (nft): Promise<Record<string, unknown>>  => {
       const metadata = await getNFTMetadata(nft.metadata_uri);
       const imageUrl = ipfsToGatewayUrl(String(metadata.image ?? ""));
       return {
