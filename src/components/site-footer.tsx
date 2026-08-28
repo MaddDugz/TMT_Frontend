@@ -15,7 +15,7 @@ const HIDDEN_ON = [ "/gallery"]; // routes to hide footer on
   return (
     <footer className="relative mt-16 sm:mt-24 border-t border-white/10 overflow-hidden">
       <div className="pointer-events-none absolute inset-x-0 -top-32 h-64 bg-[radial-gradient(circle_at_50%_0%,_rgba(0,230,118,0.10),_transparent_55%)]" aria-hidden />
-      <Container className="relative">
+      <Container>
         <div className="grid gap-12 py-12 md:grid-cols-12">
           <div className="md:col-span-5">
             <div className="flex items-center gap-3">

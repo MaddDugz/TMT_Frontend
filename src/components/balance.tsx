@@ -10,27 +10,14 @@ function toAddress(value: string | undefined): `0x${string}` | undefined {
   return undefined;
 }
 
-
-type LegacyUseBalanceArgs = {
-  address?: `0x${string}`;
-  token?: `0x${string}`;
-  query?: { enabled?: boolean };
-};
-
 export function TokenBalance() {
   const { address, isConnected } = useAccount();
   const token = toAddress(FaucetContractAddress);
 
-  const args: LegacyUseBalanceArgs = {
-    address: address ?? undefined,
-    token,
-    query: {
-      enabled: !!address && !!token,
-    },
-  };
+
 
     const { data: balance, isLoading, error } = useReadContract({ //for directly getting TMT balance
-    address: FaucetContractAddress,
+    address: token,
     abi: FaucetTokenABI,
     functionName: "balanceOf",
     args: address ? [address] : undefined,
@@ -66,7 +53,7 @@ export function TokenBalance() {
   return (
     <div className="inline-flex items-baseline gap-2 sm:gap-3">
       <span className="font-display text-3xl sm:text-4xl md:text-5xl tracking-wide bg-clip-text text-transparent bg-[linear-gradient(113deg,_#ffffff_0%,_rgba(0,230,118,0.98)_60%,_rgba(0,230,118,0.85)_100%)] drop-shadow-[0_0_24px_rgba(0,230,118,0.18)] tabular-nums">
-        {(value === undefined || value <= 0) ? ("0") :
+        {(typeof value !== "number" || value <= 0) ? ("0") :
        formatPrice(value)} 
       </span>
       <span className="text-sm sm:text-base font-semibold uppercase tracking-[0.18em] text-accent/90">

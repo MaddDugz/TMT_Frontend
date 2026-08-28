@@ -20,23 +20,9 @@ export default function UseCooldownCountdown() {
 
    const token = toAddress(FaucetContractAddress);
   
-  
-    type CooldownCountArgs = {
-    address?: `0x${string}`;
-    token?: `0x${string}`;
-    query?: { enabled?: boolean };
-  };
-    
-    const args: CooldownCountArgs = {
-      address: walletAddress ?? undefined,
-      token,
-      query: {
-        enabled: !!walletAddress && !!token,
-      },
-    };
-  
+   
      const { data: cooldownTimestamp, isLoading, error } = useReadContract({ //for directly getting TMT balance
-        address: FaucetContractAddress,
+        address: token,
         abi: FaucetTokenABI,
         functionName: "getClaimClaimedTimestamp",
         args: walletAddress ? [walletAddress] : undefined,
