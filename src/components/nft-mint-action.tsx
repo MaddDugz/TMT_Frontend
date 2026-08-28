@@ -27,7 +27,7 @@ type NftMintActionProps = { //define typeId type
   typeId: number | string;
   defaultQuantity?: number;
   onQuantityChange?: (quantity: number) => void;
-  totalLabel: number;
+  totalLabel: string;
 };
 
 function toBigInt256(value: number | string): bigint | undefined { //convert inputed number to bigInt
@@ -131,20 +131,20 @@ export function NftMintAction({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isApproveConfirmed]);
 
-  const setQuantity = (next: number | ((prev: number) => number)) => {
-    setQuantityState((prev) => {
-      const resolved =
-        typeof next === "function" ? (next as (p: number) => number)(prev) : next;
-      if (typeof onQuantityChange === "function") {
-        try {
-          onQuantityChange(resolved);
-        } catch {
-          /* noop */
-        }
-      }
-      return resolved;
-    });
-  };
+ const setQuantity = (next: number | ((prev: number) => number)) => {
+  setQuantityState(next);
+};
+
+// sync to parent whenever local quantity changes, outside of render/update phase
+useEffect(() => {
+  if (typeof onQuantityChange === "function") {
+    try {
+      onQuantityChange(quantity);
+    } catch {
+      /* noop */
+    }
+  }
+}, [quantity, onQuantityChange]);
 
   useEffect(() => {
     //Resets blockchain and frontend after claim
@@ -212,25 +212,6 @@ export function NftMintAction({
   };
 
   const disabled = isPending || isConfirming || isApprovePending || isApproveConfirming;
-
-  const buttonLabel = isApprovePending
-    ? "Approving…"
-    : isApproveConfirming
-      ? "Confirming approval…"
-      : isPending
-        ? "Signing…"
-        : isConfirming
-          ? "Minting…"
-          : isConfirmed
-            ? "Minted ✓"
-            : "Please try again";
-
-            // if(mintError || approveError || priceError){
-            //   mintError ? console.log("mint error", mintError)
-            //   : approveError ? console.log("approve error", approveError.details)
-            //   : priceError ? console.log("price error", priceError.details)
-            //   : null
-            // }
 
 
   return (
@@ -301,7 +282,7 @@ export function NftMintAction({
               className="group inline-flex h-11 flex-1 items-center justify-center rounded-2xl bg-[linear-gradient(113deg,_rgba(0,200,83,0.95)_0%,_rgba(0,230,118,0.95)_100%)] text-sm font-semibold text-background shadow-[0_14px_30px_-18px_rgba(0,230,118,0.75)] ring-1 ring-[rgba(0,230,118,0.35)] transition-all duration-200 hover:brightness-105 hover:shadow-[0_18px_40px_-20px_rgba(0,230,118,0.9)] disabled:opacity-60 disabled:hover:shadow-[0_14px_30px_-18px_rgba(0,230,118,0.75)]"
               disabled={!canMint || disabled}
             >
-              {totalLabel}
+              {totalLabel}  
             </button>
           </div>
 
