@@ -14,7 +14,7 @@ type HistoryItem = {
   token_id: number;
   nft_created: {
     metadata_uri: string;
-  };
+  }[];
   name: string;
 }
 
