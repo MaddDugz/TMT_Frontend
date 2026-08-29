@@ -150,12 +150,12 @@ export default async function Home() {
         )}
       </div>
 
-      <a
+      <Link
         href="/nft"
         className="inline-flex h-10 flex-1 max-w-[160px] items-center justify-center rounded-2xl bg-[linear-gradient(113deg,_#ffffff_0%,_rgba(0,200,83,0.95)_50%,_rgba(0,230,118,0.95)_100%)] text-sm font-semibold text-background shadow-[0_16px_36px_-18px_rgba(0,230,118,0.9)] ring-1 ring-[rgba(0,230,118,0.35)] transition-all duration-200 hover:brightness-105 hover:shadow-[0_20px_48px_-20px_rgba(0,230,118,0.98)]"
       >
         Mint →
-      </a>
+      </Link>
     </div>
   </div>
 </div>

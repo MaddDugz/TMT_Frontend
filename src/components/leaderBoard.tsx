@@ -12,7 +12,7 @@ type LeaderboardRow = {
   total_claimed: number;
 };
 
-export default function LeaderBoard() {
+export default function LeaderBoard({refresh}:{refresh:boolean}) {
   const [leaderboard, setLeaderboard] = useState<LeaderboardRow[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { address: walletAddress, isConnected } = useAccount();
@@ -38,7 +38,7 @@ export default function LeaderBoard() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [refresh]);
 
   const userIndex = isConnected
     ? leaderboard.findIndex(

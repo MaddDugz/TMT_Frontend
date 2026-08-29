@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import LeaderBoard from "@/components/leaderBoard";
 import UseCooldownCountdown from "@/components/coolDown";
 import {getNFTMetadata, ipfsToGatewayUrl} from "@/app/page";
+import Link from "next/link";
+
 
 
 type HistoryItem = {
@@ -24,9 +26,6 @@ export function formatAddress(address: string): string { //shorten address
   return `${address.slice(0, 6)}...${address.slice(-4)}`;
 }
 
-function resfreshPage(){ 
-  window.location.reload();
-}
 
 function formatMintedAt(timestamp: string): string {
   const date = new Date(timestamp);
@@ -44,6 +43,7 @@ export default function ProfilePage() {
   const { address: walletAddress, isConnected } = useAccount();
   const [currentLevel, setCurrentLevel] = useState(0);
   const [progressPercent, setProgressPercent] = useState(0);
+  const [refresh, setRefresh] = useState(false);
   const [userInfo, setUserInfo] = useState([
     { label: "NFTs", value: "0" },
     { label: "Total claims", value: "0" },
@@ -51,6 +51,10 @@ export default function ProfilePage() {
   ]);
   const [history, setHistory] = useState<HistoryItem[]>([]);
 
+  function resfreshPage(){  // for leaderboard
+  // window.location.reload();
+  setRefresh(prev => !prev);
+}
 
   useEffect(() => { //load profile details stored in DB
     if (!walletAddress) return;
@@ -310,12 +314,12 @@ const historyData: HistoryItem[] = await Promise.all( // add all the gotten meta
 
                   {/* Gallery Button */}
                   {isConnected && (
-                    <a
+                    <Link
                       href="/gallery"
                       className="inline-flex h-9 items-center justify-center rounded-xl bg-white/5 px-4 text-xs font-semibold text-white ring-1 ring-white/10 transition-all hover:bg-white/10 hover:ring-white/15"
                     >
                       View Gallery →
-                    </a>
+                    </Link>
                   )}
                 </div>
 
@@ -332,7 +336,7 @@ const historyData: HistoryItem[] = await Promise.all( // add all the gotten meta
                           >
                             <div className="flex w-full items-center gap-3">
                               <div className="min-w-0">
-                                <div className="truncate lg:w-21 w-60 text-sm font-semibold text-white">
+                                <div className="truncate lg:w-21 w-40 text-sm font-semibold text-white">
                                 {nft.name}
                                 </div>
 
@@ -413,7 +417,7 @@ const historyData: HistoryItem[] = await Promise.all( // add all the gotten meta
                 </div>
 
             <div className="ash-scrollbar mt-4 max-h-[300px] space-y-3 overflow-y-auto pr-1">
-                <LeaderBoard />
+                <LeaderBoard refresh={refresh} />
                 </div>
 
               </div>

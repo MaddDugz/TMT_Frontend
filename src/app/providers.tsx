@@ -4,6 +4,7 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { WagmiProvider } from 'wagmi'
 import {  RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { hardhat, sepolia } from "wagmi/chains";
 import { config } from '../lib/wagmi-config' // wherever your config lives
 
 import { useState } from 'react'
@@ -21,7 +22,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
         accentColorForeground: 'white', // text color on the button
         borderRadius: 'medium',
         })}  
-        modalSize="compact">
+        modalSize="compact"
+        initialChain={sepolia} //default to sepolia
+        > 
           {children}
         </RainbowKitProvider>
       </QueryClientProvider>
