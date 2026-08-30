@@ -8,6 +8,11 @@
     "start": "XDG_CONFIG_HOME=.config next start",
     "lint": "eslint"
   },
+    
+  "overrides": {
+    "viem": "$viem"
+  },
+
   "dependencies": {
     "@kingtony36/turtlenft-contracts": "^1.0.8",
     "@rainbow-me/rainbowkit": "^2.2.11",
