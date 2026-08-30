@@ -1,7 +1,7 @@
 'use client'
 
 import "@rainbow-me/rainbowkit/styles.css";
-import { WagmiProvider } from 'wagmi'
+import { WagmiProvider, type State  } from 'wagmi'
 import {  RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { hardhat, sepolia } from "wagmi/chains";
@@ -9,12 +9,11 @@ import { config } from '../lib/wagmi-config' // wherever your config lives
 
 import { useState } from 'react'
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({ children,  initialState }: { children: React.ReactNode,  initialState?: State }) {
   const [queryClient] = useState(() => new QueryClient())
-
+  
   return (
-
-    <WagmiProvider config={config}>
+    <WagmiProvider config={config} initialState={initialState}>
       <QueryClientProvider client={queryClient}>
          <RainbowKitProvider 
          theme={darkTheme({

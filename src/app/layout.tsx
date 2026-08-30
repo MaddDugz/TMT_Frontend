@@ -4,6 +4,11 @@ import "./globals.css";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Providers } from './providers'
+import { headers } from 'next/headers'
+import { cookieToInitialState } from 'wagmi'
+import { config } from '../lib/wagmi-config' // wherever your config lives
+
+
 
 const rubik = Rubik({
   variable: "--font-rubik",
@@ -21,11 +26,15 @@ export const metadata: Metadata = {
   description: "MintAura-inspired UI (homepage, faucet, profile, nft)",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>)
+ {
+
+  const initialState = cookieToInitialState(config, (await headers()).get('cookie'))
+  
   return (
     <html
       lang="en"
@@ -33,7 +42,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_rgba(34,197,94,0.22),_transparent_55%),radial-gradient(ellipse_at_bottom,_rgba(16,185,129,0.18),_transparent_60%)]" />
-        <Providers>
+        <Providers initialState={initialState}>
           <SiteHeader />
           <main className="flex-1">{children}</main>
           <SiteFooter />
