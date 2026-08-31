@@ -14,7 +14,7 @@ import {
 export const config = getDefaultConfig({
   appName: "TMT NFT Project",
   projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
-  chains: [mainnet, sepolia], //change to sepolia when deploying to testnet
+  chains: [ sepolia], //change to sepolia when deploying to testnet
   ssr: true,
 
    storage: createStorage({
@@ -30,7 +30,7 @@ export const config = getDefaultConfig({
 
   transports: {
     // [hardhat.id]: http("http://127.0.0.1:8545"),
-    [mainnet.id]: http(process.env.NEXT_PUBLIC_MAINNET_RPC_URL!),
+    // [mainnet.id]: http(process.env.NEXT_PUBLIC_MAINNET_RPC_URL!),
     [sepolia.id]: http(process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL!)
   },
 });
