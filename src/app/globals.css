@@ -203,4 +203,16 @@ img {
 .ash-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: #8a8f98; /* slightly lighter on hover */
 }
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  animation: marquee-scroll 30s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
 

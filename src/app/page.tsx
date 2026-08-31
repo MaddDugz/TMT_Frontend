@@ -59,7 +59,12 @@ export default async function Home() {
 
   const featuredData = nftData[0];
   const featured = featuredData as Record<string, unknown> | undefined;
-  
+
+  const sortedNfts = [...nftData]
+    .sort((a, b) => Number(b.type_id ?? 0) - Number(a.type_id ?? 0))
+    .filter((nft) => nft.type_id !== (featured as Record<string, unknown>)?.type_id)
+    .slice(0, 10); 
+
   return (
     <div className="relative pb-16">
       <section className="pt-10 sm:pt-14 ">
@@ -215,12 +220,9 @@ export default async function Home() {
     </div>
   </div>
 
-  <div className="mt-6 flex gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-    {nftData
-      .sort((a, b) => Number(b.type_id ?? 0) - Number(a.type_id ?? 0))
-      .slice(0, 10)
-      .map((nft) => {
-        if (nft.type_id === (featured as Record<string, unknown>)?.type_id) return null;
+  <div className="mt-6 flex gap-4 overflow-hidden pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div className="flex w-max gap-4 marquee-track">
+    {[...sortedNfts, ...sortedNfts].map((nft, i) => {
         const typeId = nft.type_id;
         const name =
           typeof nft.name === "string"
@@ -238,7 +240,7 @@ export default async function Home() {
             : null;
         return (
           <div
-            key={String(typeId)}
+            key={`${nft.type_id}-${i}`}
             className="group min-w-[220px] shrink-0 overflow-hidden rounded-[1.5rem] bg-surface-2 p-1.5 ring-1 ring-white/10 transition-all duration-200 hover:-translate-y-0.5 hover:ring-[rgba(0,230,118,0.35)] sm:min-w-[240px]"
           >
             {/* image now larger, tighter bezel, name/qty overlaid at bottom */}
@@ -270,7 +272,8 @@ export default async function Home() {
             </div>
           </div>
         );
-      })}
+    })}
+      </div>
   </div>
 </div>
         </Container>
