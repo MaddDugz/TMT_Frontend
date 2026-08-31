@@ -42,8 +42,8 @@ export default async function Home() {
 
   if (error) {
     return null;
+    console.log(error)
   }
-
 
   const nftData = await Promise.all(
     (nfts_created ?? []).map(async (nft): Promise<Record<string, unknown>>  => {
@@ -57,10 +57,22 @@ export default async function Home() {
     }),
   );
 
-  const featuredData = nftData[0];
+  const sortedList = (nftData ?? []).sort((a, b) => { // sort according to quantity available and type id straight from supabase
+  const aSoldOut = Number(a.quantity ?? 0) === 0;
+  const bSoldOut = Number(b.quantity ?? 0) === 0;
+
+  if (aSoldOut !== bSoldOut) {
+    return aSoldOut ? 1 : -1;
+  }
+
+  return Number(a.type_id ?? 0) - Number(b.type_id ?? 0);
+});
+
+
+  const featuredData = sortedList[0];
   const featured = featuredData as Record<string, unknown> | undefined;
 
-  const sortedNfts = [...nftData]
+  const sortedNfts = [...nftData] // sort NFT display for the marquee 
     .sort((a, b) => Number(b.type_id ?? 0) - Number(a.type_id ?? 0))
     .filter((nft) => nft.type_id !== (featured as Record<string, unknown>)?.type_id)
     .slice(0, 10); 
