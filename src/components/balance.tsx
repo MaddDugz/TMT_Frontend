@@ -45,7 +45,6 @@ export function TokenBalance() {
       </span>
     )
   }
-  console.log("balance object:", balance);
 
   const value = balance;
   // console.log("resolved token:", token);

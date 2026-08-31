@@ -21,12 +21,12 @@ export const config = getDefaultConfig({
     storage: cookieStorage,
   }),
 
-   wallets: [
-    {
-      groupName: "Recommended",
-      wallets: [metaMaskWallet, coinbaseWallet, injectedWallet],
-    },
-  ],
+  //  wallets: [
+  //   {
+  //     groupName: "Recommended",
+  //     wallets: [metaMaskWallet, coinbaseWallet, injectedWallet],
+  //   },
+  // ],
 
   transports: {
     // [hardhat.id]: http("http://127.0.0.1:8545"),
