@@ -143,7 +143,7 @@ export function NftCard({ tokenId, typeId, name, imageSrc, rawUnitPrice, remaini
       <div
         ref={cardRef}
         onClick={() => setIsActive(true)}
-        className={`group relative w-80 h-[30rem]  overflow-hidden rounded-3xl bg-surface ring-1 ring-white/10 transition-all duration-200 hover:-translate-y-0.5 hover:ring-[rgba(0,230,118,0.35)] tmt-surface tmt-card-hover ${
+        className={`group relative w-full max-w-80 h-[30rem]  overflow-hidden rounded-3xl bg-surface ring-1 ring-white/10 transition-all duration-200 hover:-translate-y-0.5 hover:ring-[rgba(0,230,118,0.35)] tmt-surface tmt-card-hover ${
           isActive ? "-translate-y-0.5 ring-[rgba(0,230,118,0.35)]" : ""
         }`}
       >
